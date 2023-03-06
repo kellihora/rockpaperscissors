@@ -11,21 +11,25 @@ function getComputerChoice() {
     }
 }
 
-function winningDecision(playerChoice){
+function playRound(playerChoice, compChoice, score){
     let choice = beautify(playerChoice);
-    let compChoice = getComputerChoice();
 
      if(choice !== 'Rock' && choice !== 'Scissors' && choice !== 'Paper'){
-         console.log("Please pick a valid choice...");
+         alert("Please pick a valid choice...Round wasted.");
+         return score;
      }
      else if(choice === 'Rock' && compChoice === 'Rock' || choice === 'Scissors' && compChoice === 'Scissors' || choice === 'Paper' && compChoice === 'Paper'){
-         console.log(`Wow!! What a match - you both tied with ${choice}.`);
+         alert(`Wow!! What a match - you both tied with ${choice}.\nScore: ${score}`);
+         return score;
     }
     else if(choice === 'Rock' && compChoice === 'Scissors' || choice === 'Paper' && compChoice === 'Rock' || choice === 'Scissors' && compChoice === 'Paper'){
-        console.log(`Congratulations!! You won. ${choice} beats ${compChoice}.`);
+        score++;
+        alert(`Congratulations!! You won. ${choice} beats ${compChoice}.\nScore: ${score}`);
+        return score;
     }
     else{
-        console.log(`Sorry - try again next time! ${compChoice} beats ${choice}.`);
+        alert(`Sorry - try again next time! ${compChoice} beats ${choice}. \nScore: ${score}`);
+        return score;
     }
 }
 
@@ -35,4 +39,22 @@ function beautify(playerChoice){
     return firstLetter + restOfWord;
 }
 
-winningDecision(prompt("Rock, paper or scissors?"));
+function game(){
+    let compChoice = getComputerChoice();
+    let score = 0;
+    let playerChoice;
+
+   for(let i = 0; i <5; i++ ){
+        playerChoice = prompt("Rock, Paper, Scissors?");
+        score = playRound(playerChoice, compChoice, score);
+   }
+    
+    if(score >=3){
+        alert(`Game over!! Your final score was: ${score}. Great job!`);
+    }
+    else{
+        alert(`Game over!! Your final score was: ${score}. Try again next time.`);
+    }
+}
+
+game();
